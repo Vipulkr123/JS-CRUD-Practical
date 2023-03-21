@@ -11,7 +11,11 @@ form.addEventListener('submit', (event) => {
     var imageName = document.getElementById("imageName");
     var price = document.getElementById("price").value;
     var description = document.getElementById("description").value;
+    addData(id, productName, imageName, price, description);
 
+});
+
+function addData(id, productName, imageName, price, description) {
     var productIdArray = [];
     productList = JSON.parse(localStorage.getItem("productList"));
     productList.forEach((product) => {
@@ -43,10 +47,6 @@ form.addEventListener('submit', (event) => {
             reader.onload = (e) => {
                 // Get the data URL for the file
                 const dataURL = e.target.result;
-
-                // Get the existing data from local storage, or create an empty array
-                // const data = JSON.parse(localStorage.getItem('data') || '[]');
-
                 // Add the new data to the array
                 productList.push({
                     id: id,
@@ -70,7 +70,7 @@ form.addEventListener('submit', (event) => {
             form.reset();
         }
     });
-});
+}
 
 // Function to display the data on the page
 function displayData() {
@@ -149,6 +149,8 @@ function deleteProduct(index) {
 }
 
 function updateProduct(index) {
+    document.getElementById("submit").style.display = "none";
+    document.getElementById("updatse").style.display = "block";
     var EditProduct = document.querySelectorAll(".update");
     for (let i = 0; i < EditProduct.length; i++) {
         EditProduct[i].onclick = function () {
@@ -160,6 +162,19 @@ function updateProduct(index) {
             description.value = td[4].innerHTML;
         }
     }
+}
+
+function updateproductDetails() {
+    var id = document.getElementById("id").value;
+    productList = JSON.parse(localStorage.getItem("productList"));
+    var data = productList.filter(e => e.id != id);
+    localStorage.setItem('productList', JSON.stringify(data));
+    var id = document.getElementById("id").value;
+    var productName = document.getElementById("productName").value;
+    var imageName = document.getElementById("imageName");
+    var price = document.getElementById("price").value;
+    var description = document.getElementById("description").value;
+    addData(id, productName, imageName, price, description);
 }
 
 var addProductBtn = document.querySelector('.add-product');
@@ -217,4 +232,9 @@ function sortTable() {
             switching = true;
         }
     }
+}
+
+function enableSubmitBtn() {
+    document.getElementById("updatse").style.display = "none";
+    document.getElementById("submit").style.display = "block ";
 }
