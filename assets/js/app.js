@@ -18,7 +18,7 @@ form.addEventListener('submit', (event) => {
 function addData(id, productName, imageName, price, description) {
     var productIdArray = [];
     productList = JSON.parse(localStorage.getItem("productList"));
-    if (!productList === null)
+    if (!productList == []) {
         productList.forEach((product) => {
             productIdArray = product.id;
             console.log(productIdArray);
@@ -69,6 +69,7 @@ function addData(id, productName, imageName, price, description) {
                 form.reset();
             }
         });
+    }
 }
 
 // Function to display the data on the page
