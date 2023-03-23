@@ -18,58 +18,57 @@ form.addEventListener('submit', (event) => {
 function addData(id, productName, imageName, price, description) {
     var productIdArray = [];
     productList = JSON.parse(localStorage.getItem("productList"));
-    productList.forEach((product) => {
-        productIdArray = product.id;
-        console.log(productIdArray);
-        if (id == product.id) {
-            alert("Can't add product with duplicate product id ");
-            // form.reset();
-        }
-        else {
-
-
-
-            var productList;
-            if (localStorage.getItem("productList") == null) {
-                productList = [];
+    if (!productList === null)
+        productList.forEach((product) => {
+            productIdArray = product.id;
+            console.log(productIdArray);
+            if (id == product.id) {
+                alert("Can't add product with duplicate product id ");
+                // form.reset();
             }
             else {
-                productList = JSON.parse(localStorage.getItem("productList"));
+
+                var productList;
+                if (localStorage.getItem("productList") == null) {
+                    productList = [];
+                }
+                else {
+                    productList = JSON.parse(localStorage.getItem("productList"));
+                }
+
+                // Get the file from the file input
+                const file = imageName.files[0];
+
+                // Create a new FileReader instance
+                const reader = new FileReader();
+
+                // Set the onload function for the reader
+                reader.onload = (e) => {
+                    // Get the data URL for the file
+                    const dataURL = e.target.result;
+                    // Add the new data to the array
+                    productList.push({
+                        id: id,
+                        productName: productName,
+                        imageName: dataURL,
+                        price: price,
+                        description: description
+                    });
+
+                    // Store the updated data in local storage
+                    localStorage.setItem('productList', JSON.stringify(productList));
+
+                    // Display the data on the page
+                    displayData();
+                };
+
+                // Read the file as a data URL
+                reader.readAsDataURL(file);
+
+                // Reset the form
+                form.reset();
             }
-
-            // Get the file from the file input
-            const file = imageName.files[0];
-
-            // Create a new FileReader instance
-            const reader = new FileReader();
-
-            // Set the onload function for the reader
-            reader.onload = (e) => {
-                // Get the data URL for the file
-                const dataURL = e.target.result;
-                // Add the new data to the array
-                productList.push({
-                    id: id,
-                    productName: productName,
-                    imageName: dataURL,
-                    price: price,
-                    description: description
-                });
-
-                // Store the updated data in local storage
-                localStorage.setItem('productList', JSON.stringify(productList));
-
-                // Display the data on the page
-                displayData();
-            };
-
-            // Read the file as a data URL
-            reader.readAsDataURL(file);
-
-            // Reset the form
-            form.reset();
-        }
-    });
+        });
 }
 
 // Function to display the data on the page
