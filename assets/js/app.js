@@ -1,5 +1,6 @@
 const form = document.getElementById('my-form');
 
+displayData();
 // Add an event listener for when the form is submitted
 form.addEventListener('submit', (event) => {
     // Prevent the default form submission behavior
@@ -16,59 +17,64 @@ form.addEventListener('submit', (event) => {
 });
 
 function addData(id, productName, imageName, price, description) {
+    var isAvailData = true;
     var productIdArray = [];
     productList = JSON.parse(localStorage.getItem("productList"));
+    console.log(productList);
     if (!productList == []) {
         productList.forEach((product) => {
             productIdArray = product.id;
-            console.log(productIdArray);
             if (id == product.id) {
                 alert("Can't add product with duplicate product id ");
-                // form.reset();
-            }
-            else {
-
-                var productList;
-                if (localStorage.getItem("productList") == null) {
-                    productList = [];
-                }
-                else {
-                    productList = JSON.parse(localStorage.getItem("productList"));
-                }
-
-                // Get the file from the file input
-                const file = imageName.files[0];
-
-                // Create a new FileReader instance
-                const reader = new FileReader();
-
-                // Set the onload function for the reader
-                reader.onload = (e) => {
-                    // Get the data URL for the file
-                    const dataURL = e.target.result;
-                    // Add the new data to the array
-                    productList.push({
-                        id: id,
-                        productName: productName,
-                        imageName: dataURL,
-                        price: price,
-                        description: description
-                    });
-
-                    // Store the updated data in local storage
-                    localStorage.setItem('productList', JSON.stringify(productList));
-
-                    // Display the data on the page
-                    displayData();
-                };
-
-                // Read the file as a data URL
-                reader.readAsDataURL(file);
-
-                // Reset the form
-                form.reset();
+                isAvailData = false;
+            } else {
+                isAvailData = true;
             }
         });
+    } else {
+        isAvailData = true;
+    }
+
+    if (isAvailData == true) {
+        var productList;
+        if (localStorage.getItem("productList") == null) {
+            productList = [];
+        }
+        else {
+            productList = JSON.parse(localStorage.getItem("productList"));
+        }
+
+        // Get the file from the file input
+        const file = imageName.files[0];
+
+        // Create a new FileReader instance
+        const reader = new FileReader();
+
+        // Set the onload function for the reader
+        reader.onload = (e) => {
+            // Get the data URL for the file
+            const dataURL = e.target.result;
+            // Add the new data to the array
+            productList.push({
+                id: id,
+                productName: productName,
+                imageName: dataURL,
+                price: price,
+                description: description
+            });
+
+            // Store the updated data in local storage
+            localStorage.setItem('productList', JSON.stringify(productList));
+
+            // Display the data on the page
+            displayData();
+        };
+
+        // Read the file as a data URL
+        reader.readAsDataURL(file);
+
+        // Reset the form
+        form.reset();
     }
 }
 
@@ -82,6 +88,7 @@ function displayData() {
         productList = JSON.parse(localStorage.getItem("productList"));
     }
 
+    //Binding Dynamic data 
     var html = "";
     productList.forEach((element, index) => {
         html += `<tr>
@@ -102,9 +109,7 @@ function displayData() {
     document.getElementById("productList").innerHTML = html;
 }
 
-// Call the displayData function on page load
-displayData();
-
+// Display view Image 
 var modalViewBtnList = document.querySelectorAll('.view-modal-btn');
 
 productList = JSON.parse(localStorage.getItem("productList"));
@@ -116,7 +121,7 @@ modalViewBtnList.forEach(btn =>
         modalImg.src = product.imageName;
     })
 )
-
+// perferm delete Operation 
 function deleteProduct(index) {
     var deleteProduct = document.querySelectorAll(".delete");
     for (let i = 0; i < deleteProduct.length; i++) {
@@ -148,6 +153,7 @@ function deleteProduct(index) {
     }
 }
 
+// Update the product list
 function updateProduct(index) {
     document.getElementById("submit").style.display = "none";
     document.getElementById("updatse").style.display = "block";
@@ -180,7 +186,7 @@ function updateproductDetails() {
 var addProductBtn = document.querySelector('.add-product');
 addProductBtn.addEventListener('click', () => { form.reset(); });
 
-
+// Filter the data for the product
 function filter() {
     var input, filter, table, tr, td, i, j, txtValue;
     input = document.getElementById("filterProduct");
@@ -204,7 +210,7 @@ function filter() {
     }
 }
 
-
+// sort the data based on condition 
 function sortTable() {
     var sortSelect, table, rows, switching, i, x, y, shouldSwitch;
     sortSelect = document.getElementById("sortDropdown");
@@ -234,6 +240,7 @@ function sortTable() {
     }
 }
 
+// Enable disable submit button 
 function enableSubmitBtn() {
     document.getElementById("updatse").style.display = "none";
     document.getElementById("submit").style.display = "block ";
