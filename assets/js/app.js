@@ -78,6 +78,23 @@ function addData(id, productName, imageName, price, description) {
     }
 }
 
+// Update the product list
+function updateProduct(index) {
+    document.getElementById("submit").style.display = "none";
+    document.getElementById("updatse").style.display = "block";
+    productList = JSON.parse(localStorage.getItem("productList"));
+    productList.forEach((element, index) => {
+        id.value = element.id;
+        productName.value = element.productName;
+
+        price.value = element.price;
+        description.value = element.description;
+        // imageName.value = element.imageName;
+        console.log(element.imageName);
+    });
+
+}
+
 // Function to display the data on the page
 function displayData() {
     var productList;
@@ -102,7 +119,7 @@ function displayData() {
                 </td>
           <td>${element.price}</td>
           <td>${element.description}</td>
-          <td><button class="update btn btn-warning" onclick="updateProduct(${index})" data-bs-toggle="modal"
+          <td><button class="update btn btn-warning" onclick="updateProduct(${element.id})" data-bs-toggle="modal"
           data-bs-target="#exampleModal">Edit</button></td>
           <td><button class="delete btn btn-danger" onclick="deleteProduct(${index})">Delete</button></td>`
     });
@@ -153,22 +170,7 @@ function deleteProduct(index) {
     }
 }
 
-// Update the product list
-function updateProduct(index) {
-    document.getElementById("submit").style.display = "none";
-    document.getElementById("updatse").style.display = "block";
-    var EditProduct = document.querySelectorAll(".update");
-    for (let i = 0; i < EditProduct.length; i++) {
-        EditProduct[i].onclick = function () {
-            var tr = this.parentElement.parentElement;
-            var td = tr.getElementsByTagName("td");
-            id.value = td[0].innerHTML;
-            productName.value = td[1].innerHTML;
-            price.value = td[3].innerHTML;
-            description.value = td[4].innerHTML;
-        }
-    }
-}
+
 
 function updateproductDetails() {
     var id = document.getElementById("id").value;
@@ -181,6 +183,8 @@ function updateproductDetails() {
     var price = document.getElementById("price").value;
     var description = document.getElementById("description").value;
     addData(id, productName, imageName, price, description);
+    closeBtn = document.getElementById("closeBtn");
+    closeBtn.click();
 }
 
 var addProductBtn = document.querySelector('.add-product');
