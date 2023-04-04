@@ -1,6 +1,19 @@
 const form = document.getElementById('my-form');
 
 displayData();
+
+//Function to validate Image
+function validateImage(image) {
+    let fileExtension = image.name.split(".").pop();
+    let filesize = image.size;
+    if (fileExtension == "png" && filesize < 2097152) return true;
+    else {
+        alert("Please select image less than 2MB and png format")
+        return false;
+    }
+}
+
+
 // Add an event listener for when the form is submitted
 form.addEventListener('submit', (event) => {
     // Prevent the default form submission behavior
@@ -83,16 +96,15 @@ function updateProduct(index) {
     document.getElementById("submit").style.display = "none";
     document.getElementById("updatse").style.display = "block";
     productList = JSON.parse(localStorage.getItem("productList"));
-    productList.forEach((element, index) => {
-        id.value = element.id;
-        productName.value = element.productName;
-
-        price.value = element.price;
-        description.value = element.description;
-        // imageName.value = element.imageName;
-        console.log(element.imageName);
-    });
-
+    var image = document.querySelector("#imgedit");
+    var product = productList.find((e) => e.id == index);
+    id.value = product.id;
+    productName.value = product.productName;
+    image.src = product.imageName;
+    image.style.height = "80px";
+    image.style.width = "80px";
+    price.value = product.price;
+    description.value = product.description;
 }
 
 // Function to display the data on the page
@@ -248,4 +260,20 @@ function sortTable() {
 function enableSubmitBtn() {
     document.getElementById("updatse").style.display = "none";
     document.getElementById("submit").style.display = "block ";
+}
+
+function readURL(input) {
+    if (validateImage(input.files[0]) == true) {
+        document.getElementById("imageName").src = "";
+        if (input.files || input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#imgedit')
+                    .attr('src', e.target.result)
+                    .width(80)
+                    .height(80);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 }
