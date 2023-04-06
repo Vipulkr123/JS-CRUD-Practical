@@ -242,10 +242,16 @@ function sortTable() {
 
             x = rows[i].getElementsByTagName("td")[sortSelect.selectedIndex];
             y = rows[i + 1].getElementsByTagName("td")[sortSelect.selectedIndex];
-
-            if (sortSelect.value != "" && x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                shouldSwitch = true;
-                break;
+            if (sortSelect.value == "price") {
+                if (sortSelect.value != "" && Number(x.innerHTML) > Number(y.innerHTML)) {
+                    shouldSwitch = true;
+                    break;
+                }
+            } else {
+                if (sortSelect.value != "" && x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
             }
         }
 
