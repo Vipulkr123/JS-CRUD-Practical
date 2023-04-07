@@ -33,17 +33,12 @@ function addData(id, productName, imageName, price, description) {
     var isAvailData = true;
     var productIdArray = [];
     productList = JSON.parse(localStorage.getItem("productList"));
-    console.log(productList);
     if (!productList == []) {
-        productList.forEach((product) => {
-            productIdArray = product.id;
-            if (id == product.id) {
-                alert("Can't add product with duplicate product id ");
-                isAvailData = false;
-            } else {
-                isAvailData = true;
-            }
-        });
+        let data = productList.filter(e => e.id == id);
+        isAvailData = data.length == 0 ? true : false;
+        if (!isAvailData) {
+            alert("Can't add product with duplicate product id ");
+        }
     } else {
         isAvailData = true;
     }
@@ -88,6 +83,8 @@ function addData(id, productName, imageName, price, description) {
 
         // Reset the form
         form.reset();
+        closeBtn = document.getElementById("closeBtn");
+        closeBtn.click();
     }
 }
 
@@ -125,7 +122,7 @@ function displayData() {
           <td>${element.productName}</td>
           <td><!-- Button trigger modal -->
           <button type="button" class="btn btn-success view-modal-btn" data-bs-toggle="modal"
-              data-bs-target="#staticBackdrop" value="${element.id}">
+              data-bs-target="#staticBackdrop" value="${element.id}" onclick="viewProduct(${element.id})" > 
               view
           </button>
                 </td>
@@ -139,17 +136,13 @@ function displayData() {
 }
 
 // Display view Image 
-var modalViewBtnList = document.querySelectorAll('.view-modal-btn');
 
-productList = JSON.parse(localStorage.getItem("productList"));
-modalViewBtnList.forEach(btn =>
-    btn.addEventListener('click', (e) => {
-        productList = JSON.parse(localStorage.getItem("productList"));
-        var product = productList.find((item) => parseInt(item.id) == e.target.value);
-        var modalImg = document.querySelector('#staticBackdrop #modalImg');
-        modalImg.src = product.imageName;
-    })
-)
+function viewProduct(id) {
+    productList = JSON.parse(localStorage.getItem("productList"));
+    var product = productList.find((item) => parseInt(item.id) == id);
+    var modalImg = document.querySelector('#staticBackdrop #modalImg');
+    modalImg.src = product.imageName;
+}
 // perferm delete Operation 
 function deleteProduct(index) {
     var deleteProduct = document.querySelectorAll(".delete");
@@ -189,14 +182,40 @@ function updateproductDetails() {
     productList = JSON.parse(localStorage.getItem("productList"));
     var data = productList.filter(e => e.id != id);
     localStorage.setItem('productList', JSON.stringify(data));
-    var id = document.getElementById("id").value;
-    var productName = document.getElementById("productName").value;
-    var imageName = document.getElementById("imageName");
-    var price = document.getElementById("price").value;
-    var description = document.getElementById("description").value;
-    addData(id, productName, imageName, price, description);
-    closeBtn = document.getElementById("closeBtn");
-    closeBtn.click();
+    var newImageName = document.getElementById("imageName");
+    if (newImageName.files[0] !== undefined) {
+        var id = document.getElementById("id").value;
+        var productName = document.getElementById("productName").value;
+        var imageName = document.getElementById("imageName");
+        var price = document.getElementById("price").value;
+        var description = document.getElementById("description").value;
+        addData(id, productName, imageName, price, description);
+        closeBtn = document.getElementById("closeBtn");
+        closeBtn.click();
+    } else {
+
+        var id = document.getElementById("id").value;
+        var productName = document.getElementById("productName").value;
+        var price = document.getElementById("price").value;
+        var description = document.getElementById("description").value;
+        var imageName = document.getElementById("imgedit");
+        const dataURL = imageName.src;
+        productList = JSON.parse(localStorage.getItem("productList"));
+        productList.push({
+            id: id,
+            productName: productName,
+            imageName: dataURL,
+            price: price,
+            description: description
+        });
+
+        // Store the updated data in local storage
+        localStorage.setItem('productList', JSON.stringify(productList));
+
+        closeBtn = document.getElementById("closeBtn");
+        closeBtn.click();
+    }
+    displayData();
 }
 
 var addProductBtn = document.querySelector('.add-product');
@@ -266,6 +285,7 @@ function sortTable() {
 function enableSubmitBtn() {
     document.getElementById("updatse").style.display = "none";
     document.getElementById("submit").style.display = "block ";
+    document.getElementById("imgedit").src = "";
 }
 
 function readURL(input) {
