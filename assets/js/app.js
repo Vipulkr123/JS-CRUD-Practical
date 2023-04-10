@@ -1,7 +1,6 @@
 const form = document.getElementById('my-form');
 displayData();
 var imageValid;
-// var id = 1;
 
 //Function to validate Image
 function validateImage(image) {
@@ -10,6 +9,8 @@ function validateImage(image) {
     if (fileExtension == "png" && filesize < 2097152) return true;
     else {
         alert("Please select image less than 2MB and png format")
+        let imageSelect = document.querySelector(".form-img");
+        imageSelect.value = null;
         return false;
     }
 }
@@ -19,6 +20,7 @@ form.addEventListener('submit', (event) => {
     // Prevent the default form submission behavior
     event.preventDefault();
 
+    document.getElementById("my-form").classList.add("was-validated")
     // Get the input elements from the form
     var id = document.getElementById("id").value;
     var productName = document.getElementById("productName").value;
@@ -26,7 +28,6 @@ form.addEventListener('submit', (event) => {
     var price = document.getElementById("price").value;
     var description = document.getElementById("description").value;
     addData(id, productName, imageName, price, description);
-
 });
 
 
@@ -292,8 +293,8 @@ function enableSubmitBtn() {
 
 function readURL(input) {
     imageValid = validateImage(input.files[0]);
-    console.log(imageValid);
-    if (validateImage(input.files[0]) == true) {
+    if (imageValid == false) return;
+    else {
         document.getElementById("imageName").src = "";
         if (input.files || input.files[0]) {
             var reader = new FileReader();
@@ -305,7 +306,9 @@ function readURL(input) {
             };
             reader.readAsDataURL(input.files[0]);
         }
-    } else {
-        return;
     }
+}
+
+function closeForm() {
+    document.getElementById("my-form").classList.remove("was-validated")
 }

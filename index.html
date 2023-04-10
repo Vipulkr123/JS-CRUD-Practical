@@ -46,11 +46,12 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Add Product</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="closeForm()"
+                            aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <!-- Add Product Form  -->
-                        <form id="my-form" class="is-validated">
+                        <form id="my-form" class="" novalidate>
                             <div class="mb-3">
                                 <label for="exampleInputNumber" class="form-label">Product Id</label>
                                 <input type="number" class="form-control " id="id" aria-describedby="Number" required>
@@ -99,12 +100,12 @@
                                     Please enter product description
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+                            <button type="submit" class="btn btn-primary was-validated" id="submit">Submit</button>
                         </form>
                         <!-- End Add Product Form  -->
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeForm()"
                             id="closeBtn">Close</button>
                         <button type="button" class="btn btn-primary" id="updatse" onclick="updateproductDetails()">Save
                             changes</button>
