@@ -77,6 +77,12 @@
                                 <img id="imgedit" alt="" class="img-fluid d-block">
                                 <label for="exampleInputText" class="form-label">Select Image</label>
                                 <input type="file" class="form-img" id="imageName" onchange="readURL(this)" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please Select Image
+                                </div>
                             </div>
                             <div class="input-group mb-3">
                                 <input type="number" class="form-control" aria-label="Rupee amount" id="price" min="0"
