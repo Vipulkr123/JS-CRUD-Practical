@@ -51,7 +51,7 @@
                     <div class="modal-body">
                         <!-- Add Product Form  -->
                         <form id="my-form" class="is-validated">
-                            <!-- <div class="mb-3">
+                            <div class="mb-3">
                                 <label for="exampleInputNumber" class="form-label">Product Id</label>
                                 <input type="number" class="form-control " id="id" aria-describedby="Number" required>
                                 <div class="valid-feedback">
@@ -59,92 +59,96 @@
                                 </div>
                                 <div class="invalid-feedback">
                                     Please enter id
-                                </div> -->
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputText" class="form-label">ProductName</label>
+                                <input type="text" class="form-control" id="productName" aria-describedby="Text"
+                                    required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please enter product name
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <img id="imgedit" alt="" class="img-fluid d-block">
+                                <label for="exampleInputText" class="form-label">Select Image</label>
+                                <input type="file" class="form-img" id="imageName" onchange="readURL(this)" required>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input type="number" class="form-control" aria-label="Rupee amount" id="price" min="0"
+                                    required>
+                                <span class="input-group-text">₹</span>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please enter price
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputText" class="form-label">Product Description</label>
+                                <textarea class="form-control" id="description" aria-describedby="Text"
+                                    required></textarea>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please enter product description
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+                        </form>
+                        <!-- End Add Product Form  -->
                     </div>
-                    <div class="mb-3">
-                        <label for="exampleInputText" class="form-label">ProductName</label>
-                        <input type="text" class="form-control" id="productName" aria-describedby="Text" required>
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
-                        <div class="invalid-feedback">
-                            Please enter product name
-                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                            id="closeBtn">Close</button>
+                        <button type="button" class="btn btn-primary" id="updatse" onclick="updateproductDetails()">Save
+                            changes</button>
                     </div>
-                    <div class="mb-3">
-                        <img id="imgedit" alt="" class="img-fluid d-block">
-                        <label for="exampleInputText" class="form-label">Select Image</label>
-                        <input type="file" class="form-img" id="imageName" onchange="readURL(this)" required>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="number" class="form-control" aria-label="Rupee amount" id="price" min="0" required>
-                        <span class="input-group-text">₹</span>
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
-                        <div class="invalid-feedback">
-                            Please enter price
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputText" class="form-label">Product Description</label>
-                        <textarea class="form-control" id="description" aria-describedby="Text" required></textarea>
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
-                        <div class="invalid-feedback">
-                            Please enter product description
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary" id="submit">Submit</button>
-                    </form>
-                    <!-- End Add Product Form  -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeBtn">Close</button>
-                    <button type="button" class="btn btn-primary" id="updatse" onclick="updateproductDetails()">Save
-                        changes</button>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Modal end  -->
+        <!-- Modal end  -->
 
-    <!-- Product Table  -->
-    <div class="container mt-lg-5 mt-sm-3">
-        <table class="table" id="dataTable">
-            <thead>
-                <tr>
-                    <th scope="col">ProductId</th>
-                    <th scope="col">ProductName</th>
-                    <th scope="col">Image</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Edit</th>
-                    <th scope="col">Delete</th>
-                </tr>
-            </thead>
-            <tbody id="productList">
+        <!-- Product Table  -->
+        <div class="container mt-lg-5 mt-sm-3">
+            <table class="table" id="dataTable">
+                <thead>
+                    <tr>
+                        <th scope="col">ProductId</th>
+                        <th scope="col">ProductName</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="productList">
 
-                <!-- Modal -->
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <img src='' alt="" class="img-fluid display-img" id="modalImg">
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <img src='' alt="" class="img-fluid display-img" id="modalImg">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </tbody>
-        </table>
-    </div>
+                </tbody>
+            </table>
+        </div>
     </div>
     </div>
 
