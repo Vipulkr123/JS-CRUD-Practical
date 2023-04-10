@@ -1,6 +1,7 @@
 const form = document.getElementById('my-form');
-
 displayData();
+var imageValid;
+// var id = 1;
 
 //Function to validate Image
 function validateImage(image) {
@@ -12,7 +13,6 @@ function validateImage(image) {
         return false;
     }
 }
-
 
 // Add an event listener for when the form is submitted
 form.addEventListener('submit', (event) => {
@@ -29,6 +29,7 @@ form.addEventListener('submit', (event) => {
 
 });
 
+
 function addData(id, productName, imageName, price, description) {
     var isAvailData = true;
     var productIdArray = [];
@@ -42,7 +43,6 @@ function addData(id, productName, imageName, price, description) {
     } else {
         isAvailData = true;
     }
-
     if (isAvailData == true) {
         var productList;
         if (localStorage.getItem("productList") == null) {
@@ -52,6 +52,10 @@ function addData(id, productName, imageName, price, description) {
             productList = JSON.parse(localStorage.getItem("productList"));
         }
 
+        if (imageValid == false) {
+            alert("Please select image less than 2MB and png format")
+            return;
+        }
         // Get the file from the file input
         const file = imageName.files[0];
 
@@ -175,8 +179,6 @@ function deleteProduct(index) {
     }
 }
 
-
-
 function updateproductDetails() {
     var id = document.getElementById("id").value;
     productList = JSON.parse(localStorage.getItem("productList"));
@@ -289,6 +291,8 @@ function enableSubmitBtn() {
 }
 
 function readURL(input) {
+    imageValid = validateImage(input.files[0]);
+    console.log(imageValid);
     if (validateImage(input.files[0]) == true) {
         document.getElementById("imageName").src = "";
         if (input.files || input.files[0]) {
@@ -301,5 +305,7 @@ function readURL(input) {
             };
             reader.readAsDataURL(input.files[0]);
         }
+    } else {
+        return;
     }
 }
