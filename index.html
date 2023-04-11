@@ -35,7 +35,6 @@
             <select class="dropdown-menu  d-inline ms-lg-5" id="sortDropdown" onchange="sortTable()">
                 <option value="">Sort By</option>
                 <option value="ProductName">ProductName</option>
-                <option value="productId">productId</option>
                 <option value="price">price</option>
             </select>
         </div>
@@ -54,7 +53,7 @@
                         <form id="my-form" class="" novalidate>
                             <div class="mb-3">
                                 <label for="exampleInputNumber" class="form-label">Product Id</label>
-                                <input type="number" class="form-control " id="id" aria-describedby="Number" required>
+                                <input type="text" class="form-control" id="newId" readonly>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
@@ -76,12 +75,13 @@
                             <div class="mb-3">
                                 <img id="imgedit" alt="" class="img-fluid d-block">
                                 <label for="exampleInputText" class="form-label">Select Image</label>
-                                <input type="file" class="form-img" id="imageName" onchange="readURL(this)" required>
+                                <input type="file" class="form-control form-img" id="imageName" onchange="readURL(this)"
+                                    required>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
                                 <div class="invalid-feedback">
-                                    Please Select Image
+                                    Please Select Png Image
                                 </div>
                             </div>
                             <div class="input-group mb-3">
@@ -124,10 +124,9 @@
 
         <!-- Product Table  -->
         <div class="container mt-lg-5 mt-sm-3">
-            <table class="table" id="dataTable">
+            <table class="table text-center" id="dataTable">
                 <thead>
                     <tr>
-                        <th scope="col">ProductId</th>
                         <th scope="col">ProductName</th>
                         <th scope="col">Image</th>
                         <th scope="col">Price</th>

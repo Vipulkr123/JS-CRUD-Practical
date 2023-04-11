@@ -1,6 +1,7 @@
 const form = document.getElementById('my-form');
 displayData();
 var imageValid;
+var id;
 
 //Function to validate Image
 function validateImage(image) {
@@ -22,7 +23,6 @@ form.addEventListener('submit', (event) => {
 
     document.getElementById("my-form").classList.add("was-validated")
     // Get the input elements from the form
-    var id = document.getElementById("id").value;
     var productName = document.getElementById("productName").value;
     var imageName = document.getElementById("imageName");
     var price = document.getElementById("price").value;
@@ -30,7 +30,7 @@ form.addEventListener('submit', (event) => {
     addData(id, productName, imageName, price, description);
 });
 
-
+// Add Products
 function addData(id, productName, imageName, price, description) {
     var isAvailData = true;
     var productIdArray = [];
@@ -123,7 +123,6 @@ function displayData() {
     var html = "";
     productList.forEach((element, index) => {
         html += `<tr>
-          <td>${element.id}</td>
           <td>${element.productName}</td>
           <td><!-- Button trigger modal -->
           <button type="button" class="btn btn-success view-modal-btn" data-bs-toggle="modal"
@@ -181,7 +180,7 @@ function deleteProduct(index) {
 }
 
 function updateproductDetails() {
-    var id = document.getElementById("id").value;
+    var id = document.getElementById("newId").value;
     productList = JSON.parse(localStorage.getItem("productList"));
     var data = productList.filter(e => e.id != id);
     localStorage.setItem('productList', JSON.stringify(data));
@@ -197,7 +196,7 @@ function updateproductDetails() {
         closeBtn.click();
     } else {
 
-        var id = document.getElementById("id").value;
+        var id = document.getElementById("newId").value;
         var productName = document.getElementById("productName").value;
         var price = document.getElementById("price").value;
         var description = document.getElementById("description").value;
@@ -289,6 +288,8 @@ function enableSubmitBtn() {
     document.getElementById("updatse").style.display = "none";
     document.getElementById("submit").style.display = "block ";
     document.getElementById("imgedit").src = "";
+    id = new Date().getTime();
+    document.getElementById("newId").setAttribute("value", id.toString());
 }
 
 function readURL(input) {
